@@ -19,14 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ConcertController {
-    // TODO: create hashmap of concerts for storing data
-    private static int nextId = 1;
+
     private HashMap<Integer, Concert> concerts = new HashMap<Integer, Concert>();
+    private int nextId = 1;
 
     //TODO: add initbinder to convert date
+    private int date;
     @InitBinder
     public final void initBinderUsuariosFormValidator(final WebDataBinder binder, final Locale locale) {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", locale);
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", locale);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
@@ -50,11 +51,10 @@ public class ConcertController {
     public String saveConcert(@ModelAttribute Concert concert) {
         // TODO: add concert to list of concerts
         concert.setId(nextId);
-        concerts.put(nextId, concert);
-        
         // TODO: increment nextId
-        nextId++;
+        concerts.put(nextId, concert);
         // TODO: redirect to list concerts
+        nextId++;
         return "redirect:/concerts";
     }
 
@@ -72,9 +72,7 @@ public class ConcertController {
         //TODO: clear all employees and reset id
         concerts.clear();
         nextId = 1;
-        
-        // TODO: redirect to list concerts
-        return "redirect:/concerts";
+     return "redirect:/concerts";
     }
 
 }
